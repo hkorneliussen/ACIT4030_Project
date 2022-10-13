@@ -35,7 +35,9 @@ OUTPUT_CHANNELS = 1
 # Labmda is set as recommended by the pix2pix paper
 LAMBDA = 100
 # location of pre-trained model
-checkpoint_dir = '/models'
+checkpoint_dir = '/content/gdrive/MyDrive/Colab Notebooks/ACIT/4030 - Machine learning for images and 3D data/Project/2D_Face_generating/training_checkpoints/'
+# location to store output
+result_dir = 'output'
 
 # function to load images
 def load(image_file):
@@ -83,14 +85,14 @@ def load_image_test(image_file):
   return input_image, real_image
 
 # path to folder containing some test images
-path_dataset = "/dataset/test"
+path_dataset = "dataset"
 PATH  = pathlib.Path(path_dataset)
 
 # loading the test dataset
 try:
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
+  test_dataset = tf.data.Dataset.list_files(str(PATH / '*.jpg'))
 except tf.errors.InvalidArgumentError:
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
+  test_dataset = tf.data.Dataset.list_files(str(PATH / '*.jpg'))
 test_dataset = test_dataset.map(load_image_test)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
@@ -226,7 +228,7 @@ checkpoint = tf.train.Checkpoint(generator_optimizer=generator_optimizer,
                                  discriminator=discriminator)
 
 # Defining function to generate immages 
-def generate_images(model, test_input, tar, iter):
+def generate_images(model, test_input, tar):
   prediction = model(test_input, training=True)
   plt.figure(figsize=(15, 15))
 
@@ -241,7 +243,7 @@ def generate_images(model, test_input, tar, iter):
     plt.axis('off')
 
   # saving the generated together with the input, for comparison
-  name = result_dir + '/' + str(iter) + '.jpg'
+  name = result_dir + '/pix2pix_result.jpg'
   plt.savefig(name)
   plt.close()
 
@@ -251,14 +253,13 @@ def generate_images(model, test_input, tar, iter):
   # saving the generated image
   plt.imshow(generated * 0.5 * 0.5, cmap='gray')
   plt.axis('off')
-  name = result_dir + '/generated.jpg'
+  name = result_dir + '/2D_image_grayscale.jpg'
   plt.savefig(name, bbox_inches='tight')
   
 #restoring the latest checkpoing in checkpoint_dir
 checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
 
 # generating an image
-i=0
 for inp, tar in test_dataset.take(1):
-  generate_images(generator, inp, tar, i)
-  i+=1
+  generate_images(generator, inp, tar)
+
