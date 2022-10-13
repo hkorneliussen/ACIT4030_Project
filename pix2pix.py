@@ -1,8 +1,5 @@
 '''
-This code is an implementation of the pix2pix developed by Zhu et. al. The model is trained on a custom made dataset consisting of 2D images of human faces and the corresponding sketches. 
-
-The code generates a 2D image using a random sample from images in the test set. The output is stored under the output folder and named 2D_image_grayscale.jpg. 
-'''
+This code is an implementation of the pix2pix developed by Zhu et. al:
 
 @inproceedings{CycleGAN2017,
   title={Unpaired Image-to-Image Translation using Cycle-Consistent Adversarial Networks},
@@ -10,6 +7,12 @@ The code generates a 2D image using a random sample from images in the test set.
   booktitle={Computer Vision (ICCV), 2017 IEEE International Conference on},
   year={2017}
 }
+
+The model is trained on a custom made dataset consisting of 2D images of human faces and the corresponding sketches. 
+The code generates a 2D image using a random sample from images in the test set. The output is stored under the output folder and named 2D_image_grayscale.jpg. 
+'''
+
+
 
 #import modules
 import tensorflow as tf
