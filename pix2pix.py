@@ -241,6 +241,7 @@ def generate_images(model, test_input, tar):
     # getting pixel values in the [0,1] range to plot 
     plt.imshow(display_list[i][:,:,0] * 0.5 + 0.5, cmap='gray')
     plt.axis('off')
+  plt.show()
 
   # saving the generated together with the input, for comparison
   name = result_dir + '/pix2pix_result.jpg'
