@@ -35,7 +35,7 @@ OUTPUT_CHANNELS = 1
 # Labmda is set as recommended by the pix2pix paper
 LAMBDA = 100
 # location of pre-trained model
-checkpoint_dir = '/content/gdrive/MyDrive/Colab Notebooks/ACIT/4030 - Machine learning for images and 3D data/Project/2D_Face_generating/training_checkpoints/'
+checkpoint_dir = 'models'
 # location to store output
 result_dir = 'output'
 
