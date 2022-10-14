@@ -1,3 +1,8 @@
+'''
+This script uses the super-resolution model from cv2 to increase the resolution of the image. 
+It also rescales the image to fit the resolution requirements for the 3D model. 
+'''
+
 from cv2 import dnn_superres 
 import cv2
 
