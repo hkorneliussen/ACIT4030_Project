@@ -258,7 +258,7 @@ def generate_images(model, test_input, tar):
   plt.savefig(name, bbox_inches='tight')
   
 #restoring the latest checkpoing in checkpoint_dir
-checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir))
+checkpoint.restore(tf.train.latest_checkpoint(checkpoint_dir)).expect_partial()
 
 # generating an image
 for inp, tar in test_dataset.take(1):
