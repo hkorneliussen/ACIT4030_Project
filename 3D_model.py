@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-
-#
-# Max-Planck-Gesellschaft zur Förderung der Wissenschaften e.V. (MPG) is
-# holder of all proprietary rights on this computer program.
-# Using this computer program means that you agree to the terms 
-# in the LICENSE file included with this software distribution. 
-# Any use not explicitly granted by the LICENSE is prohibited.
-#
-# Copyright©2019 Max-Planck-Gesellschaft zur Förderung
-# der Wissenschaften e.V. (MPG). acting on behalf of its Max Planck Institute
-# for Intelligent Systems. All rights reserved.
-#
-# For comments or questions, please email us at deca@tue.mpg.de
-# For commercial licensing contact, please contact ps-license@tuebingen.mpg.de
+
+'''
+This script generates 3D models and is developed by:
+
+@inproceedings{DECA:Siggraph2021,
+  title={Learning an Animatable Detailed {3D} Face Model from In-The-Wild Images},
+  author={Feng, Yao and Feng, Haiwen and Black, Michael J. and Bolkart, Timo},
+  journal = {ACM Transactions on Graphics, (Proc. SIGGRAPH)}, 
+  volume = {40}, 
+  number = {8}, 
+  year = {2021}, 
+  url = {https://doi.org/10.1145/3450626.3459936} 
+}
+
+'''
 
 import os, sys
 import cv2
