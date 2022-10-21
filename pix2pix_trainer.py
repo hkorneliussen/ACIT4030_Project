@@ -44,12 +44,12 @@ for path in paths:
   if not isExist:
     os.makedirs(path)
 
-dataset_path = '/content/ACIT4030_Project/pix2pix_training/image_dataset'
+dataset_path = 'pix2pix_training/image_dataset'
 isExists = os.path.exists(dataset_path)
 if not isExist:
   import kaggle
   kaggle.api.authenticate()
-  kaggle.api.dataset_download_files('hannekorneliussen/pix2pix-dataset', path='/content/ACIT4030_Project/pix2pix_training', unzip=True)
+  kaggle.api.dataset_download_files('hannekorneliussen/pix2pix-dataset', path='pix2pix_training', unzip=True)
 
 #defining helper functions
 def load(image_file):
@@ -124,17 +124,18 @@ def load_image_test(image_file):
 
   return input_image, real_image
 
-test_images_folder = "/content/ACIT4030_Project/pix2pix_training/image_dataset/test/"
-train_images_folder = "/content/ACIT4030_Project/pix2pix_training/image_dataset/train/"
-val_images_folder = "/content/ACIT4030_Project/pix2pix_training/image_dataset/val/"
+test_images_folder = "pix2pix_training/image_dataset/test/"
+train_images_folder = "pix2pix_training/image_dataset/train/"
+val_images_folder = "pix2pix_training/image_dataset/val/"
 
+#amount if images used limit due to computer resourcers (limited RAM)
 test_images = os.listdir(test_images_folder)
 train_images = os.listdir(train_images_folder)
 val_images = os.listdir(val_images_folder)
 
 #loading dataset into train_dataset variable and test_dataset variable
 
-path_dataset = "/content/ACIT4030_Project/pix2pix_training/image_dataset"
+path_dataset = "pix2pix_training/image_dataset"
 PATH  = pathlib.Path(path_dataset)
 print(PATH)
 
@@ -143,16 +144,16 @@ print(PATH)
 list(PATH.parent.iterdir())
 
 
-train_dataset = tf.data.Dataset.list_files(str(PATH / 'train/*.jpg'))
+train_dataset = tf.data.Dataset.list_files(str(PATH / 'train/*.jpg')[:4000])
 train_dataset = train_dataset.map(load_image_train,
                                   num_parallel_calls=tf.data.AUTOTUNE)
 train_dataset = train_dataset.shuffle(BUFFER_SIZE)
 train_dataset = train_dataset.batch(BATCH_SIZE)
 
 try:
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'test/*.jpg'))
+  test_dataset = tf.data.Dataset.list_files(str(PATH / 'test/*.jpg')[:200])
 except tf.errors.InvalidArgumentError:
-  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg'))
+  test_dataset = tf.data.Dataset.list_files(str(PATH / 'val/*.jpg')[:200])
 test_dataset = test_dataset.map(load_image_test)
 test_dataset = test_dataset.batch(BATCH_SIZE)
 
@@ -338,7 +339,7 @@ def generate_images(model, test_input, tar, iter):
     plt.imshow(display_list[i][:,:,0] * 0.5 + 0.5, cmap='gray')
     plt.axis('off')
 
-  #plt.show()
+  plt.show()
   
   name = result_dir + '/' + str(iter) + '.jpg'
   plt.savefig(name)
@@ -401,7 +402,10 @@ def fit(train_ds, test_ds, steps):
       checkpoint.save(file_prefix=checkpoint_prefix)
 
 #running the training loop
-fit(train_dataset, test_dataset, steps=20)
+fit(train_dataset, test_dataset, steps=50000)
 
+#generating images from trained model
+i=0
 for inp, tar in test_dataset.take(5):
-  generate_images(generator, inp, tar)
+  generate_images(generator, inp, tar,i)
+  i+=1
