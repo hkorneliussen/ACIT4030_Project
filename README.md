@@ -2,4 +2,4 @@
 
 This repository consist of code used to implement the 3D data project in ACIT4030. 
 
-To run the code, refer to the added notebook (framework.ipynb)
+To run the code, refer to the added notebook (framework.ipynb) and open it in a google collab session.
